@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<title>Doorway to Ad Platforms</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:oklch(0.985 0.006 95); --panel:oklch(1 0 0); --ink:oklch(0.22 0.02 60);
+  --muted:oklch(0.52 0.02 70); --line:oklch(0.9 0.01 90);
+  --accent:oklch(0.62 0.11 190); --accent-deep:oklch(0.5 0.1 195);
+  --ok:oklch(0.62 0.13 155); --stop:oklch(0.58 0.19 25); --warn:oklch(0.72 0.14 75);
+  --shadow:0 1px 2px oklch(0.4 0.02 70 / .06), 0 8px 24px oklch(0.4 0.02 70 / .06);
+  --sans:'Inter',ui-sans-serif,sans-serif; --serif:'Fraunces',Georgia,serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:oklch(0.19 0.01 250); --panel:oklch(0.24 0.012 250); --ink:oklch(0.93 0.01 90);
+    --muted:oklch(0.72 0.015 250); --line:oklch(0.34 0.012 250);
+    --accent:oklch(0.72 0.11 190); --shadow:0 1px 2px #0006, 0 10px 30px #0004; }
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);overscroll-behavior:none;margin:0}
+body{font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding-block:0 80px;padding-left:20px;padding-right:20px}
+h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;line-height:1.12;margin:0}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep)}
+@media (prefers-color-scheme: dark){.eyebrow{color:var(--accent)}}
+header.hero{padding-block:52px 32px;border-bottom:1px solid var(--line)}
+header.hero h1{font-size:clamp(30px,5.2vw,52px);margin:14px 0 16px;max-width:17ch}
+header.hero p.lede{font-size:clamp(16px,2vw,19px);color:var(--muted);max-width:62ch;margin:0}
+.verdict{display:inline-flex;align-items:center;gap:10px;margin-top:24px;padding:10px 16px;border-radius:999px;
+  background:oklch(0.62 0.13 155 / .1);color:oklch(0.4 0.13 155);font-weight:600;font-size:14px;border:1px solid oklch(0.62 0.13 155 / .28)}
+.verdict .dot{width:9px;height:9px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px oklch(0.62 0.13 155 / .18)}
+section{padding-block:42px;border-bottom:1px solid var(--line)}
+section h2{font-size:clamp(22px,3.2vw,30px);margin-bottom:6px}
+section .sub{color:var(--muted);max-width:66ch;margin:0 0 24px}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+@media(max-width:820px){.stats{grid-template-columns:repeat(2,1fr)}}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;box-shadow:var(--shadow)}
+.tile .n{font-family:var(--serif);font-size:32px;line-height:1}
+.tile .l{color:var(--muted);font-size:12px;margin-top:6px}
+.tile.zero .n{color:var(--stop)} .tile.good .n{color:oklch(0.42 0.13 155)}
+
+.simcard,.livewrap{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px;margin-top:4px}
+.simctrl{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin-bottom:14px}
+.seg{display:inline-flex;background:oklch(0.62 0.11 190 / .09);border-radius:999px;padding:4px;gap:2px;flex-wrap:wrap}
+.seg button{border:0;background:transparent;font:inherit;font-size:13px;font-weight:600;color:var(--muted);padding:8px 15px;border-radius:999px;cursor:pointer;transition:color .18s,background .18s}
+.seg button.on{background:var(--panel);color:var(--ink);box-shadow:var(--shadow)}
+.seg button:focus-visible,.chip:focus-visible,.play:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.play{border:0;background:var(--accent);color:#fff;font:inherit;font-weight:600;font-size:14px;padding:11px 22px;border-radius:999px;cursor:pointer;transition:transform .12s,filter .12s}
+.play:hover{filter:brightness(1.06)}.play:active{transform:scale(.97)}.play:disabled{opacity:.5;cursor:default}
+.stage{position:relative;height:290px;border-radius:12px;overflow:hidden;border:1px solid var(--line);
+  background:linear-gradient(180deg,oklch(0.62 0.11 190 / .05),transparent 55%),repeating-linear-gradient(90deg,var(--line) 0 1px,transparent 1px 44px)}
+.ground{position:absolute;left:0;right:0;bottom:56px;height:2px;background:var(--line)}
+.gate{position:absolute;left:50%;bottom:56px;transform:translateX(-50%);width:130px;height:158px}
+.gatepost{position:absolute;bottom:0;width:13px;height:158px;background:var(--ink);border-radius:3px;opacity:.85}
+.gatepost.l{left:0}.gatepost.r{right:0}.gatetop{position:absolute;top:0;left:0;right:0;height:13px;background:var(--ink);border-radius:3px;opacity:.85}
+.box{position:absolute;left:50%;top:6px;transform:translateX(-50%);min-width:56px;height:28px;padding:0 8px;background:var(--panel);border:2px solid var(--muted);border-radius:7px;display:grid;place-items:center;font-family:var(--mono);font-size:10px;font-weight:600;color:var(--muted);transition:all .3s}
+.box.live{border-color:var(--accent);color:var(--accent-deep);box-shadow:0 0 0 7px oklch(0.62 0.11 190 / .16)}
+.wave{position:absolute;left:50%;top:20px;width:10px;height:10px;border-radius:50%;background:var(--accent);opacity:0;transform:translateX(-50%)}
+.wave.go{animation:ping 1.1s ease-out}
+@keyframes ping{0%{opacity:.55}100%{opacity:0;transform:translateX(-50%) scale(11)}}
+.person{position:absolute;bottom:60px;left:5%;display:flex;flex-direction:column;align-items:center;gap:3px;transition:left 2.4s cubic-bezier(.4,0,.2,1)}
+.person.walk{left:calc(50% - 20px)}.person.exit{left:87%}
+.phone{width:38px;height:70px;border-radius:9px;background:var(--ink);border:2px solid var(--ink);display:grid;place-items:center;overflow:hidden}
+.phone .screen{width:30px;height:58px;border-radius:5px;background:oklch(0.62 0.11 190 / .22);display:grid;place-items:center;color:#fff;font:600 9px var(--mono);text-align:center}
+.who{font-family:var(--mono);font-size:9px;color:var(--muted)}
+.reel{width:100%;height:100%;background:linear-gradient(140deg,var(--ok),var(--accent));display:grid;place-items:center}
+.reel::after{content:"";width:0;height:0;border-left:11px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent;margin-left:3px}
+.result{position:absolute;right:3.5%;bottom:72px;width:200px;padding:13px 15px;border-radius:12px;font-size:12.5px;line-height:1.4;opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s;box-shadow:var(--shadow)}
+.result.show{opacity:1;transform:none}
+.result.fail{background:oklch(0.58 0.19 25 / .1);border:1px solid oklch(0.58 0.19 25 / .3);color:var(--stop)}
+.result.win{background:oklch(0.62 0.13 155 / .1);border:1px solid oklch(0.62 0.13 155 / .32);color:oklch(0.42 0.13 155)}
+.result b{display:block;font-size:14px;margin-bottom:4px}
+.simlog{margin-top:14px;font-family:var(--mono);font-size:12.5px;color:var(--ink);min-height:78px;background:oklch(0.4 0.02 70 / .05);border-radius:10px;padding:13px 15px}
+.simlog div{opacity:0;animation:fade .35s forwards;margin:2px 0}
+.simlog div.bad{color:var(--stop)}.simlog div.good{color:oklch(0.42 0.13 155)}
+@keyframes fade{to{opacity:1}}
+@media(max-width:520px){.result{position:static;width:auto;margin-top:10px}}
+
+.livehead{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;margin-bottom:16px}
+.livebadge{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:14px;color:var(--stop)}
+.livebadge .rec{width:11px;height:11px;border-radius:50%;background:var(--stop);animation:rec 1.4s ease-in-out infinite}
+.livebadge.off{color:var(--muted)}.livebadge.off .rec{background:var(--muted);animation:none}
+@keyframes rec{0%,100%{opacity:1;box-shadow:0 0 0 0 oklch(0.58 0.19 25 / .5)}50%{opacity:.5;box-shadow:0 0 0 8px oklch(0.58 0.19 25 / 0)}}
+.livegridwrap{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+@media(max-width:820px){.livegridwrap{grid-template-columns:1fr}}
+.presence{display:flex;flex-wrap:wrap;gap:9px;align-content:flex-start;min-height:160px;max-height:320px;overflow:auto;padding:8px;border:1px dashed var(--line);border-radius:12px}
+.pchip{display:flex;flex-direction:column;gap:2px;padding:9px 12px;border-radius:10px;background:var(--bg);border:1px solid var(--line);font-size:12px;min-width:140px;animation:chipin .45s cubic-bezier(.2,.9,.3,1.3);position:relative}
+.pchip.leaving{animation:chipout .5s ease forwards}
+.pchip .pn{font-weight:600;display:flex;align-items:center;gap:6px}
+.pchip .pn .cd{width:8px;height:8px;border-radius:50%;flex:none}
+.pchip .pm2{font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.pchip.gone{opacity:.6;background:oklch(0.4 0.02 70 / .04);animation:none}
+.pchip.gone .pn{text-decoration:line-through;text-decoration-color:var(--stop);text-decoration-thickness:1px}
+.pchip .dup{position:absolute;top:7px;right:8px;font-family:var(--mono);font-size:9.5px;font-weight:600;color:var(--warn);background:oklch(0.72 0.14 75 / .14);padding:1px 6px;border-radius:6px}
+@keyframes chipin{0%{opacity:0;transform:scale(.7) translateY(10px)}100%{opacity:1;transform:none}}
+@keyframes chipout{0%{opacity:1;transform:none}100%{opacity:0;transform:scale(.7) translateY(-10px)}}
+.ticker{background:oklch(0.4 0.02 70 / .05);border-radius:12px;padding:12px 14px;max-height:328px;overflow:auto}
+.ev{font-family:var(--mono);font-size:11.5px;margin:4px 0;display:flex;gap:8px;flex-wrap:wrap;animation:fade .3s}
+.ev .arr{color:oklch(0.42 0.13 155);font-weight:600}.ev .dep{color:var(--stop);font-weight:600}
+.livenote{font-size:12px;color:var(--muted);margin-top:12px}
+@media (prefers-reduced-motion: reduce){.person{transition:none}.wave.go,.pchip,.pchip.leaving,.ev,.livebadge .rec{animation:none}}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:720px){.two{grid-template-columns:1fr}}
+.chart{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:var(--shadow)}
+.chart h3{font-size:16px;font-family:var(--sans);font-weight:600;margin-bottom:4px}
+.chart .ch-sub{color:var(--muted);font-size:12.5px;margin-bottom:16px}
+.barrow{display:flex;align-items:center;gap:10px;margin:9px 0;font-size:13px}
+.barrow .k{width:168px;flex:none;color:var(--ink)}
+.barrow .track{flex:1;height:20px;background:oklch(0.62 0.11 190 / .09);border-radius:6px;overflow:hidden}
+.barrow .b{height:100%;border-radius:6px;transition:width .5s}
+.barrow .v{width:30px;text-align:right;flex:none;font-family:var(--mono);color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{border:1px solid var(--line);background:var(--panel);color:var(--ink);font:inherit;font-size:12.5px;font-weight:500;padding:6px 13px;border-radius:999px;cursor:pointer;transition:all .15s;display:inline-flex;gap:7px;align-items:center}
+.chip .c{width:9px;height:9px;border-radius:50%}
+.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tablecard{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.thead,.trow{display:grid;grid-template-columns:2.3fr 1.4fr 1.1fr 0.8fr 0.9fr;gap:8px;padding:11px 16px;align-items:center;font-size:13px}
+.thead{background:oklch(0.62 0.11 190 / .06);font-weight:600;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.trow{border-top:1px solid var(--line)}
+.trow .nm{font-weight:500}.trow .nm.anon{color:var(--muted);font-style:italic}
+.trow .id{font-family:var(--mono);font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.catpill{display:inline-flex;gap:6px;align-items:center;font-size:12px;font-weight:500}
+.catpill .c{width:9px;height:9px;border-radius:50%;flex:none}
+.tscroll{max-height:440px;overflow:auto}.rssi{font-family:var(--mono)}
+.legend{font-size:12px;color:var(--muted);margin-top:10px}
+
+/* BLE signal menu */
+.smenu{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:820px){.smenu{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.smenu{grid-template-columns:1fr}}
+.scard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 17px;box-shadow:var(--shadow)}
+.scard h4{font-family:var(--sans);font-size:15px;font-weight:600;margin:0 0 3px}
+.scard .sd{color:var(--muted);font-size:12.5px;margin-bottom:9px}
+.scard .un{font-size:12.5px} .scard .un b{font-weight:600;color:var(--accent-deep)}
+@media (prefers-color-scheme: dark){.scard .un b{color:var(--accent)}}
+.stag{display:inline-block;margin-top:11px;font-family:var(--mono);font-size:10px;letter-spacing:.04em;padding:3px 9px;border-radius:6px}
+.stag.now{background:oklch(0.62 0.13 155 / .14);color:oklch(0.42 0.13 155)}
+.stag.sensors{background:oklch(0.62 0.11 190 / .12);color:var(--accent-deep)}
+.stag.partial{background:oklch(0.72 0.14 75 / .16);color:oklch(0.5 0.13 70)}
+.cantstrip{margin-top:18px;background:oklch(0.58 0.19 25 / .07);border:1px solid oklch(0.58 0.19 25 / .25);border-radius:12px;padding:15px 18px}
+.cantstrip .h{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--stop);margin-bottom:9px}
+.cantstrip .items{display:flex;flex-wrap:wrap;gap:8px}
+.cantstrip .ci{font-size:12.5px;background:var(--panel);border:1px solid oklch(0.58 0.19 25 / .25);color:var(--stop);padding:4px 11px;border-radius:999px}
+
+/* multi-platform funnel */
+.pbanner{background:oklch(0.72 0.14 75 / .1);border:1px solid oklch(0.72 0.14 75 / .3);border-radius:12px;padding:14px 18px;margin-bottom:18px;font-size:14px}
+.pbanner b{color:oklch(0.5 0.13 70)}
+.fwrap{display:grid;grid-template-columns:1.15fr 1fr;gap:22px;align-items:start}
+@media(max-width:820px){.fwrap{grid-template-columns:1fr}}
+.funnel{display:flex;flex-direction:column;align-items:center;gap:8px}
+.fstage{width:100%;border:0;background:linear-gradient(180deg,var(--accent),var(--accent-deep));color:#fff;border-radius:10px;padding:14px 18px;cursor:pointer;text-align:left;transition:transform .15s,filter .15s,box-shadow .15s;box-shadow:var(--shadow)}
+.fstage:hover{filter:brightness(1.05)} .fstage.active{transform:scale(1.02);box-shadow:0 0 0 3px var(--accent),var(--shadow)}
+.fstage .fk{font-weight:600;font-size:14.5px;display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.fstage .fn{font-family:var(--mono);font-size:12.5px;opacity:.95}
+.fstage .ff{margin-top:4px;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;opacity:.88}
+.fconn{width:2px;height:10px;background:var(--line)}
+.outcomes{display:grid;gap:8px;margin-top:6px;width:100%}
+.ocard{border:1px dashed var(--warn);background:oklch(0.72 0.14 75 / .08);color:var(--ink);border-radius:10px;padding:12px 16px;cursor:pointer;text-align:left;font:inherit;transition:all .15s}
+.ocard.active{box-shadow:0 0 0 2px var(--warn);background:oklch(0.72 0.14 75 / .14)}
+.ocard .ok{font-weight:600;font-size:13.5px;display:flex;justify-content:space-between;gap:8px}
+.ocard .on2{font-family:var(--mono);font-size:12px;color:oklch(0.5 0.13 70)}
+.detail{position:sticky;top:16px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:var(--shadow);min-height:230px}
+.detail .dk{font-family:var(--serif);font-size:21px;margin-bottom:2px}
+.detail .dn{font-family:var(--mono);font-size:13px;color:var(--accent-deep);margin-bottom:14px}
+@media (prefers-color-scheme: dark){.detail .dn{color:var(--accent)}}
+.detail .drow{margin:12px 0}
+.detail .dl{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.detail .dv{font-size:14px}
+.detail .tool{display:inline-block;font-family:var(--mono);font-size:12px;background:oklch(0.62 0.11 190 / .12);color:var(--accent-deep);padding:4px 10px;border-radius:7px}
+@media (prefers-color-scheme: dark){.detail .tool{color:var(--accent)}}
+.winmiss{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+@media(max-width:600px){.winmiss{grid-template-columns:1fr}}
+.wm{border-radius:11px;padding:13px 15px;font-size:13px}
+.wm.win{background:oklch(0.62 0.13 155 / .1);border:1px solid oklch(0.62 0.13 155 / .3)}
+.wm.miss{background:oklch(0.58 0.19 25 / .09);border:1px solid oklch(0.58 0.19 25 / .28)}
+.wm .h{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+.wm.win .h{color:oklch(0.42 0.13 155)} .wm.miss .h{color:var(--stop)}
+.fbtns{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.illus{font-size:11.5px;color:var(--muted);margin-top:14px;font-style:italic}
+
+.prov{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media(max-width:720px){.prov{grid-template-columns:1fr}}
+.pcard,.callout{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:var(--shadow)}
+.pcard h3{font-family:var(--sans);font-size:17px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.badge{font-family:var(--mono);font-size:11px;padding:3px 9px;border-radius:999px;font-weight:600;white-space:nowrap}
+.badge.yes{background:oklch(0.62 0.13 155 / .14);color:oklch(0.42 0.13 155)}
+.badge.partial{background:oklch(0.72 0.14 75 / .16);color:oklch(0.5 0.13 70)}
+.badge.no{background:oklch(0.58 0.19 25 / .12);color:var(--stop)}
+.pcard ul{margin:12px 0 0;padding-left:18px;color:var(--muted);font-size:13.5px}.pcard ul li{margin:5px 0}
+.pcard .role{font-family:var(--mono);font-size:11.5px;color:var(--accent-deep);margin-top:4px}
+@media (prefers-color-scheme: dark){.pcard .role{color:var(--accent)}}
+.callout{background:oklch(0.62 0.13 155 / .07);border-color:oklch(0.62 0.13 155 / .25)}
+.callout h3{font-family:var(--sans);font-size:17px;margin-bottom:8px}
+.callout ol{margin:10px 0 0;padding-left:20px}.callout ol li{margin:8px 0}
+.sources{font-size:12.5px;color:var(--muted)}.sources a{color:var(--accent-deep)}
+@media (prefers-color-scheme: dark){.sources a{color:var(--accent)}}
+footer{padding-top:28px;color:var(--muted);font-size:12px}footer .tm{margin-top:10px;font-size:11px;opacity:.85}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Live test &middot; run on Mirza's MacBook</div>
+  <h1>From a phone at the door to an ad platform</h1>
+  <p class="lede">A live, deduplicated Bluetooth capture from this laptop &mdash; then the honest pipeline into Amazon, Meta, Google and TikTok ads: where each wins, where it breaks, and the exact identifier each one needs.</p>
+  <div class="verdict"><span class="dot"></span><span>Presence is captured live. A usable ad identity is not &mdash; the box hears a rotating address, not an IDFA/GAID.</span></div>
+</header>
+
+<section id="live-sec">
+  <div class="eyebrow">Live &middot; right now &middot; deduplicated</div>
+  <h2>Capturing in real time</h2>
+  <p class="sub">Not a recording. The scanner is listening as you read. Devices arrive and leave with animation, every event is logged to disk &mdash; and we <strong>dedupe</strong>: the same phone flapping in and out, or rotating its Bluetooth ID, is collapsed to one device, not counted again.</p>
+  <div class="livewrap">
+    <div class="livehead">
+      <div class="livebadge off" id="livebadge"><span class="rec"></span><span id="livebadgetext">Connecting to live feed…</span></div>
+      <div class="mono" style="font-size:12px;color:var(--muted)" id="liveclock"></div>
+    </div>
+    <div class="stats" id="livestats"></div>
+    <div class="livegridwrap">
+      <div>
+        <div style="margin-bottom:8px;color:var(--muted);font-size:12.5px"><strong style="color:oklch(0.42 0.13 155)">In range now</strong> &mdash; one card per <strong>deduplicated</strong> device. <span style="color:oklch(0.5 0.13 70)">×N IDs</span> = rotating addresses merged.</div>
+        <div class="presence" id="presence"></div>
+      </div>
+      <div>
+        <div style="margin-bottom:8px;color:var(--muted);font-size:12.5px"><strong style="color:var(--stop)">Recently left</strong> &mdash; no longer in range. Kept, never lost.</div>
+        <div class="presence" id="departed"></div>
+      </div>
+    </div>
+    <div style="margin:16px 0 8px;color:var(--muted);font-size:12.5px">Comings &amp; goings &mdash; every arrival and departure, also saved to <span class="mono">ble_events.jsonl</span> on disk</div>
+    <div class="ticker" id="ticker" style="max-height:240px"></div>
+    <div class="livenote" id="livenote"></div>
+  </div>
+</section>
+
+<section id="sim-sec">
+  <div class="eyebrow">Try it &middot; press play</div>
+  <h2>Watch how it works</h2>
+  <p class="sub">Two ways to turn someone walking in into an ad. Flip the switch, press play. One hits a wall. One reaches the phone.</p>
+  <div class="simcard">
+    <div class="simctrl">
+      <div class="seg" id="modeseg" role="tablist"><button data-mode="box" class="on">The doorway box</button><button data-mode="funnel">The consented funnel</button></div>
+      <button id="playbtn" class="play">Play walk-through</button>
+    </div>
+    <div class="stage" id="stage" aria-live="polite"></div>
+    <div class="simlog" id="simlog" aria-live="polite"></div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Live &middot; by type &amp; distance</div>
+  <h2>Who is in range, sorted</h2>
+  <p class="sub">Updates with the live feed. The split you asked for: anonymised Apple vs named devices vs TVs, wearables, audio and the rest. Every one carries <strong>zero</strong> ad identity, whatever its type.</p>
+  <div class="two">
+    <div class="chart"><h3>Device categories</h3><div class="ch-sub" id="catsub">live</div><div id="cats"></div></div>
+    <div class="chart"><h3>How close are they?</h3><div class="ch-sub">signal strength → proximity zones</div><div id="zones"></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Live &middot; deduplicated device list</div>
+  <h2>Devices in range now</h2>
+  <p class="sub">Tap a category to filter. One row per real device (rotated IDs merged). The ID is a random per-scan UUID &mdash; not a phone number, not an ad ID.</p>
+  <div class="chips" id="chips"></div>
+  <div class="tablecard">
+    <div class="thead"><div>Device</div><div>Category</div><div>Maker</div><div>Signal</div><div>Ad ID?</div></div>
+    <div class="tscroll" id="devrows"></div>
+  </div>
+  <div class="legend">Showing <span id="shown"></span> of <span id="total2"></span> in range. Signal = latest RSSI; higher (closer to 0) = nearer.</div>
+</section>
+
+<section id="ble-menu">
+  <div class="eyebrow">The BLE signal menu</div>
+  <h2>What we can actually capture</h2>
+  <p class="sub">Everything a passive Bluetooth scan pulls from the air, and what each signal unlocks for a footfall study. Green = running now &middot; blue = needs 2-3 sensors &middot; amber = partial.</p>
+  <div class="smenu" id="smenu"></div>
+  <div class="cantstrip"><div class="h">Never in the packet &mdash; no consent or permit changes this</div><div class="items" id="cantitems"></div></div>
+</section>
+
+<section>
+  <div class="eyebrow">Step &middot; the pipeline, per platform</div>
+  <h2>How the data feeds each ad platform</h2>
+  <p class="sub">Pick a platform. The funnel shape is the same everywhere &mdash; only the tools and match rates change. Tap a stage for detail, or press Run.</p>
+  <div class="pbanner">Consent is not the blocker &mdash; you have it. The blocker is stage 2 on <b>all four</b>: the identifier TYPE. A Bluetooth box captures a rotating BLE address, and no platform matches on that. They need an <b>IDFA/GAID</b> (from an on-device SDK) or a <b>hashed email/phone</b>. The box data is gold for on-site footfall research &mdash; just not, by itself, an ad-platform audience.</div>
+  <div class="simctrl">
+    <div class="seg" id="platseg" role="tablist"></div>
+    <div class="fbtns" style="margin:0"><button class="play" id="runfunnel">Run the funnel</button><button class="play" id="resetfunnel" style="background:var(--panel);color:var(--ink);border:1px solid var(--line)">Reset</button></div>
+  </div>
+  <div class="winmiss" id="winmiss"></div>
+  <div class="fwrap">
+    <div><div class="funnel" id="funnel"></div><div class="outcomes" id="outcomes"></div></div>
+    <div class="detail" id="detail"></div>
+  </div>
+  <div class="illus" id="illusnote"></div>
+</section>
+
+<section>
+  <div class="eyebrow">Who can actually do it</div>
+  <h2>The provider map</h2>
+  <p class="sub">Verified against each platform's live 2026 documentation.</p>
+  <div class="prov" id="prov"></div>
+</section>
+
+<section>
+  <div class="eyebrow">What I would build</div>
+  <h2>The path that is legal in Germany</h2>
+  <div class="callout"><h3>Two honest tracks for what the box captures</h3><ol id="build"></ol></div>
+</section>
+
+<section style="border:none">
+  <div class="eyebrow">Sources checked live</div>
+  <h2 style="margin-bottom:16px">Where the facts came from</h2>
+  <div class="sources" id="sources"></div>
+</section>
+
+<footer>
+  Built for Mirza &middot; Bluetooth captured live on this MacBook, deduplicated &middot; not a mockup. Funnel counts past the capture stage are illustrative and labelled.
+  <div class="tm">Amazon, Amazon DSP and Amazon Marketing Cloud are trademarks of Amazon.com, Inc. or its affiliates. Meta, Instagram, Facebook, Google, YouTube and TikTok are trademarks of their respective owners. This is a private planning demo, not affiliated with or endorsed by any of them.</div>
+</footer>
+
+</div>
+
+<script>
+const DATA = {"captured_at":"2026-01-01 00:00:00","scan_seconds":25,"host":"Example host (synthetic sample, not a real capture)","total_devices":1,"total_adv_packets":30,"named":0,"anonymous":1,"apple":1,"targetable_ad_ids":0,"devices":[{"id":"00000000-0000-0000-0000-000000000000","name":null,"mfr_ids":[76],"mfr_names":["Apple"],"services":[],"rssi_min":-90,"rssi_max":-70,"rssi_last":-78,"first_seen":0.5,"last_seen":24.5,"hits":30,"category":"anonymous","cat":"Apple (anonymised)","grp":"apple"}],"samples":[],"_cats":{"Apple (anonymised)":1},"_zones":{"Same room (2-8 m)":1},"_groups":{"Apple (anonymised)":"apple","Samsung (anonymised)":"anon","Anonymous device":"anon","TV / media":"tv","Wearable":"wear","Audio":"audio","Vehicle / scooter":"vehicle","Smart home":"home","Computer":"computer","Phone (named)":"phone","Other named device":"named"},"_funnel":{"devices_real":1,"platforms":{"amazon":{"label":"Amazon Ads","win":"Best when you sell on Amazon. Real purchase intent, on-Amazon shopping data, Amazon Marketing Cloud clean room, and 2026 radius targeting.","miss":"Needs an Amazon DSP seat (minimum spend, usually via a partner). Overkill if you are not selling products on Amazon."},"meta":{"label":"Meta \u00b7 IG / FB","win":"Biggest, cheapest reach to test. Reels + Feed. Strong lookalikes grown from your opt-in list.","miss":"Device-ID audiences are restricted \u2014 you lean on the email/phone list + location. No purchase-intent signal like Amazon."},"google":{"label":"Google Ads","win":"Intent on Search + huge YouTube reach. Customer Match + radius + store-visit conversions.","miss":"Device-ID lists cannot be mixed with email/phone. Store-visit reporting needs volume to unlock."},"tiktok":{"label":"TikTok Ads","win":"Cheap young reach. Customer File auto-hashes your list. Offline Events API ties in-store actions back to ads.","miss":"Lower match rate (~20-50%), audience-size minimums, and it skews younger than a B2B or premium crowd."}},"stages":[{"k":"Presence","n":"1,000 footfall","w":100,"what":"A phone crosses the venue / geofence. Detection is trivial \u2014 our live scan proves it. But raw Bluetooth carries ZERO ad identity, and (as you saw) it duplicates wildly.","need":"A boundary: a QR sign, venue wifi, or a geofence.","flag":"detection only","tools":{"amazon":"BLE / QR / geofence","meta":"BLE / QR / geofence","google":"BLE / QR / geofence","tiktok":"BLE / QR / geofence"}},{"k":"Resolve an ad identity","n":"the real wall","w":62,"what":"Consent you have. The blocker is the identifier TYPE. The box hears a rotating BLE address \u2014 that is NOT an Apple IDFA or Google GAID. Every platform matches on IDFA/GAID or a hashed email/phone, never on a BLE address. So the box's stream, however lawfully captured, has nothing a platform can ingest.","need":"A real ad ID (IDFA/GAID) from a consented on-device SDK, or a hashed email/phone list.","flag":"the technical wall (not consent)","tools":{"amazon":"IDFA/GAID via SDK, or hashed email/phone","meta":"IDFA/GAID via SDK, or hashed email/phone","google":"IDFA/GAID via SDK, or hashed email/phone","tiktok":"IDFA/GAID/MAID via SDK, or hashed email/phone"}},{"k":"Hash + prepare","n":"210 records","w":55,"what":"Emails/phones are SHA-256 hashed on your side. Raw PII never leaves. Each platform matches on the hash, then deletes your file.","need":"SHA-256 (all four auto-hash on upload too).","flag":"","tools":{"amazon":"SHA-256","meta":"SHA-256","google":"SHA-256","tiktok":"SHA-256 (auto on upload)"}},{"k":"Upload the audience","n":"210 sent","w":50,"what":"Push the hashed list to the platform as a custom audience.","need":"An ad account on that platform.","flag":"","tools":{"amazon":"Amazon DSP / Marketing Cloud","meta":"Meta Custom Audience (customer list)","google":"Google Customer Match","tiktok":"TikTok Customer File audience"}},{"k":"Platform matches","n":"~140 matched","w":34,"what":"The platform matches your hashes to its logged-in users \u2192 a usable audience. Match rate varies by platform.","need":"Nothing \u2014 the platform matches in its own clean room.","flag":"match rate differs","tools":{"amazon":"Amazon match (~65%)","meta":"Meta match (high)","google":"Google match","tiktok":"TikTok match (~20-50%)"}}],"outcomes":[{"k":"Build audience + geo","n":"1 audience + lookalike","what":"Turn the matched list into an audience, grow a lookalike, and layer location targeting around the venue.","tools":{"amazon":"Amazon DSP audiences + radius","meta":"Meta location + lookalike","google":"Google radius + similar audiences","tiktok":"TikTok location + lookalike"}},{"k":"Run the ads","n":"~90,000 impressions","what":"Run the campaign on that platform's inventory.","tools":{"amazon":"Amazon DSP + Sponsored ads","meta":"Instagram / Facebook Reels & Feed","google":"YouTube / Search / Display","tiktok":"TikTok In-Feed / Spark Ads"}},{"k":"Convert + measure","n":"~120 purchases","what":"Attribute the path from ad \u2192 action, so you know the venue crowd actually converted.","tools":{"amazon":"Amazon Marketing Cloud","meta":"Meta attribution","google":"GA4 / Google conversions","tiktok":"TikTok Events API"}}]}};
+const $ = (id)=>document.getElementById(id);
+const esc = (s)=>(s==null?"":String(s)).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const GROUPS = DATA._groups;
+const GC = {apple:"oklch(0.62 0.11 190)", anon:"oklch(0.55 0.02 70)", tv:"oklch(0.58 0.19 25)",
+  wear:"oklch(0.62 0.13 155)", audio:"oklch(0.72 0.14 75)", vehicle:"oklch(0.5 0.1 145)",
+  home:"oklch(0.6 0.12 320)", computer:"oklch(0.5 0.08 250)", phone:"oklch(0.5 0.13 210)", named:"oklch(0.6 0.08 100)"};
+const grp = cat => GROUPS[cat] || "named";
+const color = cat => GC[grp(cat)] || GC.named;
+const zoneOf = r => r>=-55?"Very close (0-2 m)": r>=-70?"Same room (2-8 m)": r>=-82?"Nearby (8-20 m)":"Far / edge (20 m+)";
+
+// ---- shared renderers (fed by live OR embedded snapshot) ----
+function setStats(cells){ $("livestats").innerHTML = cells.map(s=>
+  `<div class="tile ${s.cls||''}"><div class="n">${s.n??'—'}</div><div class="l">${s.l}</div></div>`).join(""); }
+function bars(el, obj, colorFn){
+  const e=Object.entries(obj).sort((a,b)=>b[1]-a[1]); const max=Math.max(...e.map(x=>x[1]),1);
+  el.innerHTML=e.map(([k,v])=>`<div class="barrow"><div class="k">${esc(k)}</div><div class="track"><div class="b" style="width:${Math.round(v/max*100)}%;background:${colorFn?colorFn(k):'var(--accent)'}"></div></div><div class="v">${v}</div></div>`).join("");
+}
+let rows=[], filter="all";
+function renderChips(){
+  const counts={}; rows.forEach(r=>counts[r.cat]=(counts[r.cat]||0)+1);
+  const mk=(key,label,count,g)=>`<button class="chip ${filter===key?'on':''}" data-f="${key}">${g?`<span class="c" style="background:${GC[g]}"></span>`:''}${esc(label)} <span style="opacity:.6">${count}</span></button>`;
+  $("chips").innerHTML=mk("all","All",rows.length,null)+Object.keys(counts).sort((a,b)=>counts[b]-counts[a]).map(c=>mk(c,c,counts[c],grp(c))).join("");
+  document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{filter=b.dataset.f;renderChips();renderRows();});
+}
+function renderRows(){
+  const rs=rows.filter(r=>filter==="all"||r.cat===filter);
+  $("shown").textContent=rs.length; $("total2").textContent=rows.length;
+  $("devrows").innerHTML=rs.map(r=>{
+    const dup=r.ids&&r.ids>1?` <span style="color:oklch(0.5 0.13 70);font-family:var(--mono);font-size:10px">×${r.ids} IDs</span>`:'';
+    return `<div class="trow"><div><div class="nm ${r.name&&r.name!=='(anonymous)'?'':'anon'}">${esc(r.name||'(anonymous)')}${dup}</div><div class="id">${esc(r.id||'')}</div></div>
+      <div><span class="catpill"><span class="c" style="background:${color(r.cat)}"></span>${esc(r.cat)}</span></div>
+      <div>${esc(r.maker||'—')}</div><div class="rssi">${r.rssi??'—'} dBm</div>
+      <div style="color:var(--stop);font-weight:600">none</div></div>`;
+  }).join("");
+}
+function renderTable(newRows){ rows=newRows; renderChips(); renderRows(); }
+
+// ---- offline fallback from embedded snapshot ----
+function renderEmbedded(){
+  $("catsub").textContent="recorded snapshot (live feed not connected)";
+  setStats([
+    {n:DATA.total_devices,l:"devices in snapshot"},
+    {n:DATA.total_devices,l:"unique (snapshot)"},
+    {n:DATA.total_adv_packets,l:"packets captured"},
+    {n:0,l:"duplicates removed",cls:"good"},
+    {n:DATA.targetable_ad_ids,l:"usable ad IDs",cls:"zero"},
+  ]);
+  bars($("cats"),DATA._cats,color); bars($("zones"),DATA._zones);
+  renderTable(DATA.devices.map(d=>({name:d.name,id:d.id,cat:d.cat,maker:(d.mfr_names&&d.mfr_names[0])||'—',rssi:d.rssi_max,ids:1})));
+}
+
+// ===== LIVE feed =====
+(function(){
+  const badge=$("livebadge"),bt=$("livebadgetext"),clock=$("liveclock"),
+        pres=$("presence"),tick=$("ticker"),note=$("livenote");
+  const shown=new Map(); let lastEv="", everLive=false;
+  function renderPresence(d){
+    const ids=new Set(d.present.map(p=>p.fp));
+    shown.forEach((el,fp)=>{if(!ids.has(fp)){el.classList.add("leaving");setTimeout(()=>el.remove(),480);shown.delete(fp);}});
+    d.present.forEach(p=>{
+      if(shown.has(p.fp)){ shown.get(p.fp).querySelector(".pm2").textContent=esc(p.cat)+" · "+(p.rssi??'—')+" dBm · "+(p.dwell??0)+"s"; return; }
+      const el=document.createElement("div");el.className="pchip";
+      const dup=p.ids>1?`<span class="dup">×${p.ids} IDs</span>`:'';
+      el.innerHTML='<div class="pn"><span class="cd" style="background:'+color(p.cat)+'"></span>'+esc(p.name)+'</div><div class="pm2">'+esc(p.cat)+' · '+(p.rssi??'—')+' dBm</div>'+dup;
+      pres.appendChild(el);shown.set(p.fp,el);
+    });
+  }
+  function renderDeparted(d){
+    const dd=d.departed||[];
+    $("departed").innerHTML = dd.length ? dd.map(p=>{
+      const dup=p.ids>1?`<span class="dup">×${p.ids} IDs</span>`:'';
+      return '<div class="pchip gone"><div class="pn"><span class="cd" style="background:'+color(p.cat)+'"></span>'+esc(p.name)+'</div><div class="pm2">'+esc(p.cat)+' · left '+(p.gone??0)+'s ago · stayed '+(p.dwell??0)+'s</div>'+dup+'</div>';
+    }).join("") : '<div style="color:var(--muted);font-size:12px;padding:12px">None gone yet — a device moves here ~90s after it stops broadcasting.</div>';
+  }
+  function renderTicker(d){
+    const key=d.events.map(e=>e.ts+e.kind+e.fp).join("|"); if(key===lastEv)return; lastEv=key;
+    tick.innerHTML=d.events.map(e=>{
+      const k=e.kind==="in"?'<span class="arr">&#9656; arrived</span>':'<span class="dep">&#9666; left</span>';
+      const dup=e.ids>1?' <span style="color:oklch(0.5 0.13 70)">×'+e.ids+'</span>':'';
+      return '<div class="ev">'+k+'<span>'+esc(e.clock)+'</span><span>'+esc(e.name)+dup+'</span><span style="color:var(--muted)">'+esc(e.cat)+'</span></div>';
+    }).join("");
+  }
+  async function poll(){
+    try{
+      const r=await fetch("ble_live.json?t="+Date.now(),{cache:"no-store"}); if(!r.ok) throw 0;
+      const d=await r.json(); everLive=true;
+      badge.classList.remove("off"); bt.textContent="CAPTURING LIVE · started "+d.started_at;
+      clock.textContent="updated "+d.updated+" · running "+d.elapsed+"s";
+      setStats([
+        {n:d.present_count,l:"in range now"},
+        {n:d.departed_count,l:"no longer in range"},
+        {n:d.unique_ever,l:"total unique (ever)",cls:"good"},
+        {n:d.dedup_removed,l:"duplicates removed",cls:"good"},
+        {n:d.targetable_ad_ids,l:"usable ad IDs",cls:"zero"},
+      ]);
+      $("catsub").textContent="live · in range now";
+      bars($("cats"),d.cats,color);
+      const z={}; d.present.forEach(p=>{const k=zoneOf(p.rssi); z[k]=(z[k]||0)+1;}); bars($("zones"),z);
+      renderTable(d.present.map(p=>({name:p.name,id:p.fp,cat:p.cat,maker:p.maker,rssi:p.rssi,ids:p.ids})));
+      renderPresence(d); renderDeparted(d); renderTicker(d);
+      note.textContent=d.raw_addresses+" raw sightings → "+d.unique_ever+" unique devices after dedupe ("+d.dedup_removed+" duplicates removed). "+d.present_count+" in range, "+d.departed_count+" have left. 0 carry an advertising ID. Every device — present or gone — is kept in ble_events.jsonl.";
+    }catch(e){
+      badge.classList.add("off"); bt.textContent="Live feed not connected";
+      note.textContent="Live view runs at the localhost link. As a plain file the browser blocks the feed — showing the recorded snapshot instead.";
+      if(!everLive) renderEmbedded();
+    }
+  }
+  poll(); setInterval(poll,2000);
+})();
+
+// ===== MULTI-PLATFORM FUNNEL =====
+const F=DATA._funnel; let plat="amazon", active=0, running=false;
+const all=()=>F.stages.concat(F.outcomes);
+function detail(){
+  const s=all()[active];
+  $("detail").innerHTML=`<div class="dk">${esc(s.k)}</div><div class="dn">${esc(String(s.n))}</div>
+    <div class="drow"><div class="dl">What happens</div><div class="dv">${esc(s.what)}</div></div>
+    ${s.need?`<div class="drow"><div class="dl">What you need</div><div class="dv">${esc(s.need)}</div></div>`:''}
+    <div class="drow"><div class="dl">Tool on ${esc(F.platforms[plat].label)}</div><span class="tool">${esc(s.tools[plat])}</span></div>`;
+}
+function paint(){
+  document.querySelectorAll(".fstage").forEach((el,i)=>el.classList.toggle("active",i===active));
+  document.querySelectorAll(".ocard").forEach((el,i)=>el.classList.toggle("active",(F.stages.length+i)===active));
+}
+function winmiss(){
+  const p=F.platforms[plat];
+  $("winmiss").innerHTML=`<div class="wm win"><div class="h">Where ${esc(p.label)} wins</div>${esc(p.win)}</div>
+    <div class="wm miss"><div class="h">Where you're missing / limited</div>${esc(p.miss)}</div>`;
+}
+function renderFunnel(){
+  $("funnel").innerHTML=F.stages.map((s,i)=>`${i>0?'<div class="fconn"></div>':''}
+    <button class="fstage ${i===active?'active':''}" data-s="${i}" style="width:${s.w}%">
+      <div class="fk"><span>${i+1}. ${esc(s.k)}</span><span class="fn">${esc(String(s.n))}</span></div>
+      ${s.flag?`<div class="ff">${esc(s.flag)}</div>`:''}</button>`).join("");
+  $("outcomes").innerHTML=F.outcomes.map((o,i)=>`<button class="ocard ${(F.stages.length+i)===active?'active':''}" data-s="${F.stages.length+i}">
+    <div class="ok"><span>${F.stages.length+i+1}. ${esc(o.k)}</span><span class="on2">${esc(String(o.n))}</span></div></button>`).join("");
+  document.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{active=+b.dataset.s;paint();detail();});
+}
+$("platseg").innerHTML=Object.entries(F.platforms).map(([k,v],i)=>`<button data-p="${k}" class="${i===0?'on':''}">${esc(v.label)}</button>`).join("");
+document.querySelectorAll("#platseg button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("#platseg button").forEach(x=>x.classList.remove("on"));
+  b.classList.add("on"); plat=b.dataset.p; winmiss(); detail();
+});
+async function runFunnel(){
+  if(running)return; running=true;
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches; const sleep=ms=>new Promise(r=>setTimeout(r,reduce?0:ms));
+  for(let i=0;i<all().length;i++){active=i;paint();detail();await sleep(950);} running=false;
+}
+renderFunnel(); winmiss(); detail();
+$("runfunnel").onclick=runFunnel;
+$("resetfunnel").onclick=()=>{active=0;paint();detail();};
+$("illusnote").textContent="Only the top device count ("+F.devices_real+") is from our scan. Every number below the capture stage is an illustrative one-hour example, not a promise.";
+
+// provider matrix
+$("prov").innerHTML=[
+  {name:"Amazon Ads",sub:"DSP · Marketing Cloud",b:["yes","Full pipeline"],role:"CAPTURE-TO-ACTIVATE (if you sell on Amazon)",
+   pts:["Hashed email/phone → advertiser audience; matched to shoppers.","AMC clean room; MAIDs via a CDP.","2026 radius + postal-code targeting."]},
+  {name:"Meta (IG / FB)",sub:"Reels, Feed",b:["partial","Destination"],role:"BIGGEST CHEAP REACH",
+   pts:["Custom Audience from your opt-in list + strong lookalikes.","Location targeting.","Device-ID audiences restricted."]},
+  {name:"Google Ads",sub:"Search, YouTube, Display",b:["partial","Destination"],role:"INTENT + REACH",
+   pts:["Customer Match + radius + store-visit conversions.","Device-ID lists can't mix with email/phone."]},
+  {name:"TikTok Ads",sub:"In-Feed, Spark",b:["partial","Destination"],role:"CHEAP YOUNG REACH",
+   pts:["Customer File audience (auto SHA-256).","Offline Events API for in-store conversions.","~20-50% match; skews younger."]},
+  {name:"A Bluetooth box",sub:"beacon / DIY",b:["no","Cannot target"],role:"DETECTION ONLY",
+   pts:["Detects presence & distance — the live feed above.","Zero ad identity. Nothing to hand any platform.","Secret harvesting breaks GDPR in Germany."]},
+].map(p=>`<div class="pcard"><h3>${esc(p.name)} <span class="badge ${p.b[0]}">${esc(p.b[1])}</span></h3>
+  <div class="role">${esc(p.role)} · ${esc(p.sub)}</div><ul>${p.pts.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
+
+$("build").innerHTML=[
+  "TRACK A — research / footfall (your permitted use): the live deduped presence, dwell time, category mix and comings-and-goings above ARE the deliverable. A clean movement dataset, no ad ID needed. This is fully working right now.",
+  "TRACK B — ad-platform targeting: platforms need an IDFA/GAID or a hashed email/phone. A BLE address is neither, so this track cannot run off the box alone.",
+  "To feed ads, the ad ID must come from software ON the phone: a consented app SDK that reports its MAID, or a light email/phone capture — then hash and upload to Amazon / Meta / Google / TikTok.",
+  "The commercial 'geofencing ad' vendors resell exactly this: MAIDs from consented app-SDK location data via a data broker / CDP, matched by a DSP. The box is only the trigger, never the identity.",
+  "Honest verdict: for the research paper you're permitted to run, you already have everything. For ad targeting, the box is not the data source.",
+].map(x=>`<li>${esc(x)}</li>`).join("");
+
+$("sources").innerHTML=[
+  ["Amazon Ads — Marketing Cloud + DSP + CDP","https://advertising.amazon.com/resources/whats-new/amazon-marketing-cloud-and-amazon-dsp-are-integrated-with-customer-data-platform-solutions"],
+  ["Amazon Ads — DSP radius targeting","https://advertising.amazon.com/library/news/radius-targeting"],
+  ["Meta — mobile advertising IDs for Custom Audiences","https://www.facebook.com/business/help/570474483033581"],
+  ["Google Ads — data segments that use Mobile Device IDs","https://support.google.com/google-ads/answer/9441463"],
+  ["TikTok — Customer File audiences","https://ads.tiktok.com/help/article/customer-file"],
+  ["TikTok — Offline Activity audiences","https://ads.tiktok.com/help/article/offline-activity-audiences"],
+  ["Simpli.fi — Addressable Geo-Fencing","https://simpli.fi/latest/beyond-these-walls-the-power-of-addressable-geo-fencing"],
+].map(([t,u])=>`<div style="margin:6px 0">&bull; <a href="${u}" target="_blank" rel="noopener">${esc(t)}</a></div>`).join("");
+
+// ===== BLE signal menu =====
+$("smenu").innerHTML=[
+  ["Presence","A device is in range.","Live headcount, footfall over time.","now"],
+  ["Dwell time","Arrival → departure per device.","How long people stay; lounge vs pass-through.","now"],
+  ["Proximity","Signal strength (RSSI) → distance.","Near vs far; density by zone.","now"],
+  ["Position & path","RSSI across 2-3 receivers → trilateration.","Heatmap and walking routes through the space.","sensors"],
+  ["Flow between zones","Same device at door → counter → exit.","Journey funnel: who reaches the counter.","sensors"],
+  ["Device type","Manufacturer + service UUIDs + name.","Audience mix: Apple vs Android, wearables, TVs.","now"],
+  ["Crowd density","Count in range over time.","Peak hours, capacity, staffing.","now"],
+  ["Repeat visits","Stable fingerprint on distinctive devices.","Returning vs new — distinctive devices only.","partial"],
+  ["Beacon payloads","iBeacon / Eddystone UUIDs, if broadcast.","Trigger content from your own beacons.","partial"],
+].map(([t,d,u,tag])=>{
+  const lbl=tag==="now"?"running now":tag==="sensors"?"needs 2-3 sensors":"partial";
+  return `<div class="scard"><h4>${esc(t)}</h4><div class="sd">${esc(d)}</div><div class="un"><b>Unlocks:</b> ${esc(u)}</div><span class="stag ${tag}">${esc(lbl)}</span></div>`;
+}).join("");
+$("cantitems").innerHTML=["Apple IDFA","Google GAID","Phone number","Email","Person's name","Meta / Google / Amazon / TikTok account"]
+  .map(x=>`<span class="ci">${esc(x)}</span>`).join("");
+
+// ===== walk-through simulator =====
+(function(){
+  const stage=$("stage"),log=$("simlog"),playBtn=$("playbtn");
+  let mode="box",running=false;
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const sleep=ms=>new Promise(r=>setTimeout(r,reduce?0:ms));
+  const q=s=>stage.querySelector(s);
+  function render(){stage.innerHTML='<div class="ground"></div><div class="gate"><div class="gatepost l"></div><div class="gatepost r"></div><div class="gatetop"></div><div class="box">BLE</div><div class="wave"></div></div><div class="person"><div class="phone"><div class="screen" id="scr"></div></div><div class="who">visitor</div></div>';}
+  function logln(t,cls){const d=document.createElement("div");if(cls)d.className=cls;d.textContent=t;log.appendChild(d);log.scrollTop=log.scrollHeight;}
+  function reset(){render();log.innerHTML="";}
+  function result(cls,title,body){const r=document.createElement("div");r.className="result "+cls+" show";r.innerHTML="<b>"+title+"</b>"+body;stage.appendChild(r);}
+  async function playBox(){
+    logln("1 · Person walks toward the gate…");await sleep(500);
+    q(".person").classList.add("walk");await sleep(2500);
+    q(".box").classList.add("live");q(".wave").classList.add("go");
+    logln("2 · Bluetooth box detects a device · about 3 m away");await sleep(1200);
+    logln("3 · Box asks the phone for its advertising ID…");await sleep(1300);
+    logln("X · Phone refuses. iOS / Android never send the ad ID over Bluetooth.","bad");await sleep(500);
+    result("fail","Dead end","No identity captured. No ad platform has anything to match. Proven by the live scan.");
+  }
+  async function playFunnel(){
+    logln("1 · Person arrives and sees a QR sign at the door…");await sleep(500);
+    q(".person").classList.add("walk");await sleep(2500);
+    $("scr").textContent="QR";logln("2 · They scan it. Your offer page opens — with their consent.");await sleep(1400);
+    logln("3 · They opt in. Hashed, sent to Amazon / Meta / Google / TikTok.","good");await sleep(1400);
+    q(".person").classList.add("exit");await sleep(1500);
+    $("scr").innerHTML='<div class="reel"></div>';
+    logln("4 · The platform matches them → your ad reaches them later. Done.","good");await sleep(400);
+    result("win","It reaches the shopper","One consented list → any of the four platforms. Legal in Germany, and it delivers.");
+  }
+  async function play(){if(running)return;running=true;playBtn.disabled=true;reset();await sleep(60);if(mode==="box")await playBox();else await playFunnel();running=false;playBtn.disabled=false;}
+  document.querySelectorAll("#modeseg button").forEach(b=>b.onclick=()=>{if(running)return;document.querySelectorAll("#modeseg button").forEach(x=>x.classList.remove("on"));b.classList.add("on");mode=b.dataset.mode;reset();});
+  playBtn.onclick=play;reset();
+})();
+</script>
+</body>
+</html>

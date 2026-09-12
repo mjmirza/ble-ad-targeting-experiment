@@ -1,0 +1,32 @@
+{
+  "captured_at": "2026-01-01 00:00:00",
+  "scan_seconds": 25,
+  "host": "Example host (synthetic sample, not a real capture)",
+  "total_devices": 1,
+  "total_adv_packets": 30,
+  "named": 0,
+  "anonymous": 1,
+  "apple": 1,
+  "targetable_ad_ids": 0,
+  "devices": [
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "name": null,
+      "mfr_ids": [
+        76
+      ],
+      "mfr_names": [
+        "Apple"
+      ],
+      "services": [],
+      "rssi_min": -90,
+      "rssi_max": -70,
+      "rssi_last": -78,
+      "first_seen": 0.5,
+      "last_seen": 24.5,
+      "hits": 30,
+      "category": "anonymous"
+    }
+  ],
+  "samples": []
+}

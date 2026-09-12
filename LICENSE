@@ -1,0 +1,102 @@
+ORA License (Own Risk Attribution)
+Version 1.0, 2026
+
+Copyright (c) 2026 Mirza Iqbal. All rights reserved.
+
+Read this first. This is NOT the MIT license and NOT an open-source license. The
+software and all files in this repository (the "Software") are published as a
+documented, archived experiment, for reference and educational purposes only. By
+downloading, copying, installing, running, or using the Software in any way, you
+accept every term below in full. If you do not accept these terms, do not use the
+Software.
+
+
+1. Use entirely at your own risk
+
+   The Software is provided "as is" and "as available", with all faults and with
+   no warranties of any kind, whether express, implied, statutory, or otherwise,
+   including without limitation any warranty of merchantability, fitness for a
+   particular purpose, accuracy, reliability, title, or non-infringement.
+
+   You use the Software entirely at your own risk. You alone are fully responsible
+   for what you do with it and for every consequence that follows, whether direct
+   or indirect, foreseen or unforeseen.
+
+
+2. No liability, under any theory, from any angle
+
+   To the maximum extent permitted by applicable law, the Author shall not be
+   liable for any claim, damage, loss, cost, fine, penalty, or expense of any kind
+   whatsoever, whether direct, indirect, incidental, special, exemplary, punitive,
+   or consequential, and whether arising in contract, tort (including negligence),
+   strict liability, statute, regulation, or any other legal or equitable theory,
+   arising out of or in any way connected with the Software or its use or misuse,
+   even if the Author has been advised of the possibility of such outcomes. This
+   limitation applies to you and to every third party, without exception.
+
+
+3. Legal compliance is your responsibility alone
+
+   The Software observes radio signals. Capturing, storing, or processing radio
+   signals, device data, location data, or any personal data may be regulated
+   where you are, including without limitation under the GDPR, the ePrivacy rules,
+   and other national and local law. It is your sole responsibility to determine
+   what is lawful in your jurisdiction, and to obtain any consent, permit, licence,
+   or approval required, before you run or deploy the Software. The Author makes no
+   representation or warranty that any particular use is lawful in any place.
+
+
+4. You indemnify the Author
+
+   You agree to defend, indemnify, and hold the Author harmless from and against
+   any and all claims, liabilities, damages, losses, fines, and expenses, including
+   reasonable legal fees, arising out of or connected with your use of the Software,
+   your deployment of it, or your breach of these terms or of any law.
+
+
+5. Attribution is required
+
+   Any permitted use, copy, excerpt, or reference must keep this notice intact and
+   give clear, visible credit to Mirza Iqbal as the author, with a link back to the
+   original repository.
+
+
+6. Commercial use requires written permission
+
+   Personal, non-commercial evaluation and study are permitted under these terms.
+   Any commercial use, redistribution, hosting as a service, or derivative work
+   requires the Author's prior written permission. Requests go through
+   https://github.com/mjmirza.
+
+
+7. No model training or cloning without permission
+
+   Using the Software to train or fine-tune a model, or to clone, reimplement,
+   port, or recreate a functionally equivalent work, is a derivative use and
+   requires the Author's prior written permission.
+
+
+8. Trademarks
+
+   Amazon and Amazon DSP are trademarks of Amazon.com, Inc. or its affiliates.
+   Meta, Instagram, Facebook, Google, YouTube, and TikTok are trademarks of their
+   respective owners. This repository is independent and is not affiliated with,
+   endorsed by, or sponsored by any of them.
+
+
+9. Termination
+
+   Any breach of these terms ends your rights under this license automatically and
+   immediately.
+
+
+10. Severability and governing effect
+
+   If any provision of this license is held unenforceable, the remaining provisions
+   stay in full force, and the unenforceable provision is limited to the minimum
+   extent necessary rather than struck entirely.
+
+
+In short. Use it at your own risk. Everyone is responsible for their own use and
+their own risk. The Author is not responsible for anything you do with the
+Software. Keep the credit. Ask before any commercial use.

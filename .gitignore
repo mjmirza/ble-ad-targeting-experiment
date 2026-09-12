@@ -1,0 +1,9 @@
+.venv/
+blevenv/
+__pycache__/
+*.pyc
+ble_live.json
+ble_events.jsonl
+*.log
+_script.js
+.DS_Store
